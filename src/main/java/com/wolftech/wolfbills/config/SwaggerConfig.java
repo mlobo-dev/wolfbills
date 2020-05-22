@@ -19,7 +19,7 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.wolftech.financas.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.wolftech.wolfbills.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .groupName("Wolf Tech Masters")
@@ -28,13 +28,13 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfo(
-                "QUESTON API",
-                "Esta API é utilizada para controlar as requisições REST do  projeto Queston",
+                "WOLFBILLS API",
+                "Esta API é utilizada para controlar as requisições REST do  Wolfbills",
                 "Versão 1.0",
-                "https://gitlab.com/mlobo.dev/queston-backend",
-                new Contact("Márcio Lôbo and Alberto Lopes", "https://gitlab.com/mlobo.dev/queston-backend", "mlobo.dev@gmail.com"),
+                "https://github.com/mlobo-dev/wolfbills",
+                new Contact("Márcio Lôbo ", "https://github.com/mlobo-dev/wolfbills", "mlobo.dev@gmail.com"),
                 "Permitido para utilização em estudos, compartilhe :)",
-                "https://gitlab.com/mlobo.dev/queston-backend",
+                "https://github.com/mlobo-dev/wolfbills",
                 Collections.emptyList() // Vendor Extensions
         );
     }
