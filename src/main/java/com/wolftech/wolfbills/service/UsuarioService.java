@@ -21,7 +21,7 @@ public class UsuarioService {
         this.repository = repository;
     }
 
-    public Usuario autenticar(String email , String senha) {
+    public Usuario autenticar(String email, String senha) {
         Optional<Usuario> usuario = repository.findByEmail(email);
         if (!usuario.isPresent()) {
             throw new ErroAutenticacaoExcpetion("Usuário não encontrado, email: " + email);

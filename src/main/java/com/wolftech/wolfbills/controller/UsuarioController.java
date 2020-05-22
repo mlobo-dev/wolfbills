@@ -1,6 +1,7 @@
 package com.wolftech.wolfbills.controller;
 
 import com.wolftech.wolfbills.dto.UsuarioDTO;
+import com.wolftech.wolfbills.exception.ErroAutenticacaoExcpetion;
 import com.wolftech.wolfbills.exception.RegraNegocioExcpetion;
 import com.wolftech.wolfbills.mapper.UsuarioMapper;
 import com.wolftech.wolfbills.model.Usuario;
@@ -38,8 +39,15 @@ public class UsuarioController {
     @PostMapping("/autenticar")
     @ApiOperation("Rota para autenticar o usuário")
     public ResponseEntity autenticar(@RequestBody UsuarioDTO dto) {
-        Usuario usuarioAutenticado = service.autenticar(dto.getEmail(), dto.getSenha());
-        return ResponseEntity.ok(usuarioAutenticado);
+        try{
+            Usuario usuarioAutenticado = service.autenticar(dto.getEmail(), dto.getSenha());
+            return ResponseEntity.ok(usuarioAutenticado);
+        }catch (ErroAutenticacaoExcpetion e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+
+        }
+
+
     }
 
     @GetMapping("saldo/{id}")
