@@ -10,6 +10,7 @@ import com.wolftech.wolfbills.model.enums.StatusLancamento;
 import com.wolftech.wolfbills.service.LancamentoService;
 import com.wolftech.wolfbills.service.UsuarioService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +26,8 @@ public class LancamentoController {
     private final LancamentoMapper mapper;
     private final UsuarioService usuarioService;
 
-
     @GetMapping
+    @ApiOperation("Rota para buscar um lancamento através de suas características.")
     public ResponseEntity buscar(
             @RequestParam(value = "descricao", required = false) String descricao,
             @RequestParam(value = "mes", required = false) Integer mes,
@@ -41,16 +42,15 @@ public class LancamentoController {
 
     }
 
-
     @PostMapping
+    @ApiOperation("Rota para salvar um lancamento")
     public ResponseEntity salvar(@RequestBody LancamentoCadastroDTO dto) {
-
             Lancamento lancamentoSalvo = service.salvar(dto);
             return new ResponseEntity(lancamentoSalvo, HttpStatus.CREATED);
-
     }
 
     @PutMapping("/{id}")
+    @ApiOperation("Rota para atualizar um lancamento")
     public ResponseEntity atualizar(@PathVariable Long id, @RequestBody LancamentoDTO dto) {
         return service.buscarOptionalPorId(id).map(entity -> {
             try {
@@ -66,6 +66,7 @@ public class LancamentoController {
     }
 
     @DeleteMapping("/{id}")
+    @ApiOperation("Rota para deletar o lançamento")
     public ResponseEntity deletar(@PathVariable Long id) {
         return service.buscarOptionalPorId(id).map(entity -> {
             service.deletar(entity);
@@ -74,6 +75,7 @@ public class LancamentoController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Rota para recuperar pelo id o lançamento")
     public ResponseEntity<LancamentoDTO> buscarPeloId(@PathVariable Long id) {
         Lancamento lancamento = service.buscarPeloId(id);
         LancamentoDTO dto = mapper.toDto(lancamento);
@@ -81,8 +83,8 @@ public class LancamentoController {
         return ResponseEntity.ok(dto);
     }
 
-
     @PutMapping("/atualizar-status/{id}")
+    @ApiOperation("Rota para alterar o status do lançamento")
     public ResponseEntity atualizar(@RequestBody AtualizaStatusDTO dto, @PathVariable Long id) {
         return service.buscarOptionalPorId(id).map(entity -> {
             StatusLancamento statusSelecionado = StatusLancamento.valueOf(dto.getStatus());
@@ -100,6 +102,5 @@ public class LancamentoController {
 
         }).orElseGet(() -> new ResponseEntity("Lancamento não encontrado na base de dados.", HttpStatus.BAD_REQUEST));
     }
-
 
 }
