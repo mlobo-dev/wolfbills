@@ -18,12 +18,11 @@ public class LancamentoDTO {
 
     private Long id;
     private String descricao;
-    private Integer ano;
-    private Integer mes;
     private BigDecimal valor;
-    private TipoLancamento tipoLancamento;
-    private StatusLancamento statusLancamento;
+    private TipoLancamento tipo;
+    private StatusLancamento status;
     private LocalDate dataCadastro;
-    private Long idUsuario;
+    private LocalDate dataVencimento;
+    private UsuarioDTO usuario;
 
 }

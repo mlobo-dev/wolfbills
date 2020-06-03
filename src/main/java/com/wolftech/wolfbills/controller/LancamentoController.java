@@ -30,12 +30,8 @@ public class LancamentoController {
     @ApiOperation("Rota para buscar um lancamento através de suas características.")
     public ResponseEntity buscar(
             @RequestParam(value = "descricao", required = false) String descricao,
-            @RequestParam(value = "mes", required = false) Integer mes,
-            @RequestParam(value = "ano", required = false) Integer ano,
             @RequestParam(value = "usuario", required = true) Long idUsuario) {
         Lancamento filter = new Lancamento();
-        filter.setAno(ano);
-        filter.setMes(mes);
         filter.setDescricao(descricao);
         filter.setUsuario(usuarioService.buscarPorId(idUsuario));
         return ResponseEntity.ok(service.buscar(filter));
@@ -56,7 +52,7 @@ public class LancamentoController {
             try {
                 Lancamento lancamento = mapper.toEntity(dto);
                 lancamento.setId(entity.getId());
-                lancamento.setUsuario(usuarioService.buscarPorId(dto.getIdUsuario()));
+                lancamento.setUsuario(usuarioService.buscarPorId(dto.getUsuario().getId()));
                 service.atualizar(lancamento);
                 return ResponseEntity.ok(lancamento);
             } catch (RegraNegocioExcpetion e) {
@@ -79,7 +75,6 @@ public class LancamentoController {
     public ResponseEntity<LancamentoDTO> buscarPeloId(@PathVariable Long id) {
         Lancamento lancamento = service.buscarPeloId(id);
         LancamentoDTO dto = mapper.toDto(lancamento);
-        dto.setIdUsuario(lancamento.getUsuario().getId());
         return ResponseEntity.ok(dto);
     }
 
@@ -93,7 +88,7 @@ public class LancamentoController {
             }
 
             try {
-                entity.setStatusLancamento(statusSelecionado);
+                entity.setStatus(statusSelecionado);
                 entity = service.atualizar(entity);
                 return ResponseEntity.ok(entity);
             } catch (RegraNegocioExcpetion e) {

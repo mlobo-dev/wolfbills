@@ -34,7 +34,7 @@ public class LancamentoService {
         lancamento.setUsuario(usuarioService.buscarPorId(dto.getIdUsuario()));
         validar(lancamento);
         lancamento.setDataCadastro(LocalDate.now());
-        lancamento.setStatusLancamento(StatusLancamento.PENDENTE);
+        lancamento.setStatus(StatusLancamento.PENDENTE);
         return repository.save(lancamento);
     }
 
@@ -62,7 +62,7 @@ public class LancamentoService {
     }
 
     public void atualizarStatus(Lancamento lancamento, StatusLancamento statusLancamento) {
-        lancamento.setStatusLancamento(statusLancamento);
+        lancamento.setStatus(statusLancamento);
         atualizar(lancamento);
     }
 
@@ -71,13 +71,6 @@ public class LancamentoService {
             throw new RegraNegocioExcpetion("Informe uma descrição válida.");
         }
 
-        if (lancamento.getMes() == null || lancamento.getMes() < 1 || lancamento.getMes() > 12) {
-            throw new RegraNegocioExcpetion("Informe um mês válido.");
-        }
-
-        if (lancamento.getAno() == null || lancamento.getAno().toString().length() > 4) {
-            throw new RegraNegocioExcpetion("Informe um ano válido.");
-        }
 
         if (lancamento.getUsuario() == null) {
             throw new RegraNegocioExcpetion("Informe um usuário válido.");
@@ -87,7 +80,7 @@ public class LancamentoService {
             throw new RegraNegocioExcpetion("Informe um valor válido.");
         }
 
-        if (lancamento.getTipoLancamento() == null) {
+        if (lancamento.getTipo() == null) {
             throw new RegraNegocioExcpetion("Informe um tipo de lançamento.");
         }
     }

@@ -73,7 +73,7 @@ public class LancamentoServiceTest {
         //Cenário
         Lancamento lancamentoSalvo = LancamentoRepositoryTest.criarLancamento();
         lancamentoSalvo.setId(1L);
-        lancamentoSalvo.setStatusLancamento(StatusLancamento.CANCELADO);
+        lancamentoSalvo.setStatus(StatusLancamento.CANCELADO);
         doNothing().when(service).validar(lancamentoSalvo);
         when(repository.save(lancamentoSalvo)).thenReturn(lancamentoSalvo);
 
@@ -148,7 +148,7 @@ public class LancamentoServiceTest {
         //Cenario
         Lancamento lancamento = LancamentoRepositoryTest.criarLancamento();
         lancamento.setId(1L);
-        lancamento.setStatusLancamento(StatusLancamento.PENDENTE);
+        lancamento.setStatus(StatusLancamento.PENDENTE);
 
         StatusLancamento novoStatus = StatusLancamento.EFETIVADO;
         doReturn(lancamento).when(service).atualizar(lancamento);
@@ -157,7 +157,7 @@ public class LancamentoServiceTest {
         service.atualizarStatus(lancamento, novoStatus);
 
         //Verificação
-        assertThat(lancamento.getStatusLancamento()).isEqualTo(novoStatus);
+        assertThat(lancamento.getStatus()).isEqualTo(novoStatus);
         verify(service).atualizar(lancamento);
 
     }
@@ -207,14 +207,6 @@ public class LancamentoServiceTest {
         lancamento.setDescricao("Salário");
         erro = catchThrowable(() -> service.validar(lancamento));
         assertThat(erro).isInstanceOf(RegraNegocioExcpetion.class).hasMessage("Informe um mês válido.");
-
-        lancamento.setMes(1);
-        erro = catchThrowable(() -> service.validar(lancamento));
-        assertThat(erro).isInstanceOf(RegraNegocioExcpetion.class).hasMessage("Informe um ano válido.");
-
-        lancamento.setAno(1);
-        erro = catchThrowable(() -> service.validar(lancamento));
-        assertThat(erro).isInstanceOf(RegraNegocioExcpetion.class).hasMessage("Informe um usuário válido.");
 
         Usuario usuario = new Usuario();
         usuario.setId(1L);

@@ -3,13 +3,15 @@ package com.wolftech.wolfbills.mapper;
 import com.wolftech.wolfbills.dto.LancamentoCadastroDTO;
 import com.wolftech.wolfbills.model.Lancamento;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-05-22T13:34:59-0300",
+    date = "2020-06-03T18:52:14-0300",
     comments = "version: 1.3.0.Final, compiler: javac, environment: Java 1.8.0_252 (Private Build)"
 )
 @Component
@@ -25,12 +27,11 @@ public class LancamentoCadastroMapperImpl implements LancamentoCadastroMapper {
 
         lancamentoCadastroDTO.setId( entity.getId() );
         lancamentoCadastroDTO.setDescricao( entity.getDescricao() );
-        lancamentoCadastroDTO.setAno( entity.getAno() );
-        lancamentoCadastroDTO.setMes( entity.getMes() );
         lancamentoCadastroDTO.setValor( entity.getValor() );
-        lancamentoCadastroDTO.setTipoLancamento( entity.getTipoLancamento() );
-        lancamentoCadastroDTO.setStatusLancamento( entity.getStatusLancamento() );
+        lancamentoCadastroDTO.setTipo( entity.getTipo() );
+        lancamentoCadastroDTO.setStatus( entity.getStatus() );
         lancamentoCadastroDTO.setDataCadastro( entity.getDataCadastro() );
+        lancamentoCadastroDTO.setDataVencimento( entity.getDataVencimento() );
 
         return lancamentoCadastroDTO;
     }
@@ -45,12 +46,11 @@ public class LancamentoCadastroMapperImpl implements LancamentoCadastroMapper {
 
         lancamento.setId( dto.getId() );
         lancamento.setDescricao( dto.getDescricao() );
-        lancamento.setAno( dto.getAno() );
-        lancamento.setMes( dto.getMes() );
         lancamento.setValor( dto.getValor() );
-        lancamento.setTipoLancamento( dto.getTipoLancamento() );
-        lancamento.setStatusLancamento( dto.getStatusLancamento() );
+        lancamento.setTipo( dto.getTipo() );
+        lancamento.setStatus( dto.getStatus() );
         lancamento.setDataCadastro( dto.getDataCadastro() );
+        lancamento.setDataVencimento( dto.getDataVencimento() );
 
         return lancamento;
     }
@@ -81,5 +81,33 @@ public class LancamentoCadastroMapperImpl implements LancamentoCadastroMapper {
         }
 
         return list;
+    }
+
+    @Override
+    public Set<Lancamento> toDto(Set<Lancamento> entities) {
+        if ( entities == null ) {
+            return null;
+        }
+
+        Set<Lancamento> set = new HashSet<Lancamento>( Math.max( (int) ( entities.size() / .75f ) + 1, 16 ) );
+        for ( Lancamento lancamento : entities ) {
+            set.add( lancamento );
+        }
+
+        return set;
+    }
+
+    @Override
+    public Set<Lancamento> toEntity(Set<LancamentoCadastroDTO> dtos) {
+        if ( dtos == null ) {
+            return null;
+        }
+
+        Set<Lancamento> set = new HashSet<Lancamento>( Math.max( (int) ( dtos.size() / .75f ) + 1, 16 ) );
+        for ( LancamentoCadastroDTO lancamentoCadastroDTO : dtos ) {
+            set.add( toEntity( lancamentoCadastroDTO ) );
+        }
+
+        return set;
     }
 }
