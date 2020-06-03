@@ -1,15 +1,19 @@
 package com.wolftech.wolfbills.mapper;
 
 import com.wolftech.wolfbills.dto.LancamentoDTO;
+import com.wolftech.wolfbills.dto.UsuarioDTO;
 import com.wolftech.wolfbills.model.Lancamento;
+import com.wolftech.wolfbills.model.Usuario;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2020-05-22T13:35:00-0300",
+    date = "2020-06-03T18:52:14-0300",
     comments = "version: 1.3.0.Final, compiler: javac, environment: Java 1.8.0_252 (Private Build)"
 )
 @Component
@@ -25,12 +29,12 @@ public class LancamentoMapperImpl implements LancamentoMapper {
 
         lancamentoDTO.setId( entity.getId() );
         lancamentoDTO.setDescricao( entity.getDescricao() );
-        lancamentoDTO.setAno( entity.getAno() );
-        lancamentoDTO.setMes( entity.getMes() );
         lancamentoDTO.setValor( entity.getValor() );
-        lancamentoDTO.setTipoLancamento( entity.getTipoLancamento() );
-        lancamentoDTO.setStatusLancamento( entity.getStatusLancamento() );
+        lancamentoDTO.setTipo( entity.getTipo() );
+        lancamentoDTO.setStatus( entity.getStatus() );
         lancamentoDTO.setDataCadastro( entity.getDataCadastro() );
+        lancamentoDTO.setDataVencimento( entity.getDataVencimento() );
+        lancamentoDTO.setUsuario( usuarioToUsuarioDTO( entity.getUsuario() ) );
 
         return lancamentoDTO;
     }
@@ -45,12 +49,12 @@ public class LancamentoMapperImpl implements LancamentoMapper {
 
         lancamento.setId( dto.getId() );
         lancamento.setDescricao( dto.getDescricao() );
-        lancamento.setAno( dto.getAno() );
-        lancamento.setMes( dto.getMes() );
         lancamento.setValor( dto.getValor() );
-        lancamento.setTipoLancamento( dto.getTipoLancamento() );
-        lancamento.setStatusLancamento( dto.getStatusLancamento() );
+        lancamento.setTipo( dto.getTipo() );
+        lancamento.setStatus( dto.getStatus() );
         lancamento.setDataCadastro( dto.getDataCadastro() );
+        lancamento.setDataVencimento( dto.getDataVencimento() );
+        lancamento.setUsuario( usuarioDTOToUsuario( dto.getUsuario() ) );
 
         return lancamento;
     }
@@ -81,5 +85,63 @@ public class LancamentoMapperImpl implements LancamentoMapper {
         }
 
         return list;
+    }
+
+    @Override
+    public Set<Lancamento> toDto(Set<Lancamento> entities) {
+        if ( entities == null ) {
+            return null;
+        }
+
+        Set<Lancamento> set = new HashSet<Lancamento>( Math.max( (int) ( entities.size() / .75f ) + 1, 16 ) );
+        for ( Lancamento lancamento : entities ) {
+            set.add( lancamento );
+        }
+
+        return set;
+    }
+
+    @Override
+    public Set<Lancamento> toEntity(Set<LancamentoDTO> dtos) {
+        if ( dtos == null ) {
+            return null;
+        }
+
+        Set<Lancamento> set = new HashSet<Lancamento>( Math.max( (int) ( dtos.size() / .75f ) + 1, 16 ) );
+        for ( LancamentoDTO lancamentoDTO : dtos ) {
+            set.add( toEntity( lancamentoDTO ) );
+        }
+
+        return set;
+    }
+
+    protected UsuarioDTO usuarioToUsuarioDTO(Usuario usuario) {
+        if ( usuario == null ) {
+            return null;
+        }
+
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+
+        usuarioDTO.setId( usuario.getId() );
+        usuarioDTO.setNome( usuario.getNome() );
+        usuarioDTO.setEmail( usuario.getEmail() );
+        usuarioDTO.setSenha( usuario.getSenha() );
+
+        return usuarioDTO;
+    }
+
+    protected Usuario usuarioDTOToUsuario(UsuarioDTO usuarioDTO) {
+        if ( usuarioDTO == null ) {
+            return null;
+        }
+
+        Usuario usuario = new Usuario();
+
+        usuario.setId( usuarioDTO.getId() );
+        usuario.setNome( usuarioDTO.getNome() );
+        usuario.setEmail( usuarioDTO.getEmail() );
+        usuario.setSenha( usuarioDTO.getSenha() );
+
+        return usuario;
     }
 }

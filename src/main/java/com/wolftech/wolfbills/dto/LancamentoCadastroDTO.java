@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -20,13 +21,21 @@ public class LancamentoCadastroDTO {
     private Long id;
     @NotNull
     private Long idUsuario;
+    @NotEmpty
     private String descricao;
-    private Integer ano;
-    private Integer mes;
+
+    @NotNull
     private BigDecimal valor;
-    private TipoLancamento tipoLancamento;
-    private StatusLancamento statusLancamento;
+
+    @NotNull
+    private TipoLancamento tipo;
+
+    @NotNull
+    private StatusLancamento status;
+
     private LocalDate dataCadastro;
 
+    @NotNull
+    private LocalDate dataVencimento;
 
 }

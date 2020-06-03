@@ -20,7 +20,7 @@ import java.time.LocalDate;
 @Table(name = "tbl_lancamento")
 public class Lancamento {
 
-    @Column(name = "id")
+    @Column(name = "cod_lancamento")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,28 +28,27 @@ public class Lancamento {
     @Column(name = "descricao")
     private String descricao;
 
-    @Column(name = "ano")
-    private Integer ano;
-
-    @Column(name = "mes")
-    private Integer mes;
 
     @Column(name = "valor")
     private BigDecimal valor;
 
     @Column(name = "tipo")
     @Enumerated(EnumType.STRING)
-    private TipoLancamento tipoLancamento;
+    private TipoLancamento tipo;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    private StatusLancamento statusLancamento;
-
-    @ManyToOne
-    @JoinColumn(name = "id_usuario")
-    private Usuario usuario;
+    private StatusLancamento status;
 
     @Column(name = "data_cadastro")
     @Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
     private LocalDate dataCadastro;
+
+    @Column(name = "data_vencimento")
+    @Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
+    private LocalDate dataVencimento;
+
+    @ManyToOne
+    @JoinColumn(name = "cod_usuario")
+    private Usuario usuario;
 }
